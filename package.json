@@ -1,0 +1,28 @@
+{
+  "name": "savebite",
+  "version": "1.0.0",
+  "description": "mern stuck app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Sumit Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^1.41.3",
+    "cors": "^2.8.5",
+    "cron": "^4.1.4",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "fuse.js": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.1",
+    "multer": "^1.4.5-lts.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "node-cron": "^3.0.3",
+    "razorpay": "^2.9.6",
+    "socket.io": "^4.8.1",
+    "twilio": "^5.5.1"
+  }
+}
