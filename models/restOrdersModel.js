@@ -12,6 +12,6 @@ const orderData = new Schema({
     orderQty:{type:Number},
     userid: { type: String},
 })
-const ordersDetail = mongoose.model('ordersDetail',orderData);
+const ordersDetail = mongoose.model('ordersDetails',orderData);
 
 export default ordersDetail;

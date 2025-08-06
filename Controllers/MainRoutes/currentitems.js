@@ -25,7 +25,7 @@ export const currentOrderitems = async (req, res) => {
     if(Data.HomeItemAmt.length > 0){
         Data.HomeItemAmt.forEach( async (ele) => {
             restAddresses.add(ele.userid);
-            orderItems.push(ele._id);
+            orderItems.push({itemId:ele._id,userid:ele.userid,orderOty:ele.userQty});
             await ItemModel.findByIdAndUpdate(ele._id,{$inc:{quantity: -ele.userQty}},{new:true})
         })
         user.currentDeliveryitems.push({orderid,items:Data.HomeItemAmt,orderAdd,restAdds:Array.from(restAddresses)});
@@ -38,7 +38,7 @@ export const currentOrderitems = async (req, res) => {
     if(Data.RestItemAmt.length > 0){
         Data.RestItemAmt.forEach( async (item) => {
             restAddress.add(item.userid);
-            orderItems.push({itemId:item._id,userid:item.userid,itemOty:item.userQty});
+            orderItems.push({itemId:item._id,userid:item.userid,orderOty:item.userQty});
             await ItemModel.findByIdAndUpdate(
                 item._id,
                 {$inc:{quantity: -item.userQty}},
@@ -86,7 +86,6 @@ export const orderDelivered = async (orderid, userid) => {
     if (!user) throw new Error("not found");
 
     const deliveredOrder = await user.currentDeliveryitems.findOne(item => item.orderid === orderid);
-
 
     user.currentDeliveryitems = user.currentDeliveryitems.filter(item => item.orderid !== orderid);
 
