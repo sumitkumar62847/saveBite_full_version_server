@@ -49,8 +49,12 @@ export const currentOrderitems = async (req, res) => {
         user.currentDiningInitems.push({orderid,items:Data.RestItemAmt,restAdds:Array.from(restAddress)});
         await user.save();
     }
+    const orderItemsObj = new Object;
+    orderItemsObj.orderid = orderid;
+    orderItemsObj.orderuserid = userId;
+    orderItemsObj.items = orderItems;
 
-    restItemWithDetail(orderItems);
+    restItemWithDetail(orderItemsObj);
     return res.status(200).json({ message: "Item added"});
   } catch (err) {
     console.error("error:", err.message);
@@ -85,9 +89,9 @@ export const orderDelivered = async (orderid, userid) => {
     const user = await mainUser.findOne({ userid });
     if (!user) throw new Error("not found");
 
-    const deliveredOrder = await user.currentDeliveryitems.findOne(item => item.orderid === orderid);
+    const deliveredOrder = await user.currentDeliveryitems?.findOne(item => item.orderid === orderid);
 
-    user.currentDeliveryitems = user.currentDeliveryitems.filter(item => item.orderid !== orderid);
+    user.currentDeliveryitems = user.currentDeliveryitems?.filter(item => item.orderid !== orderid);
 
     user.orders.push(deliveredOrder);
     await user.save();

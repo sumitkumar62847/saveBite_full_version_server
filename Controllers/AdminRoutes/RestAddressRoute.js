@@ -22,7 +22,7 @@ const RestAddressRoute = async (req, res) => {
         await adminUser.save();
         res.status(200).json({message:'Success'});
     }catch(err) {
-        console.log(err);
+        console.error(err);
         return res.status(500).json({ message: err.message });
     }
 }

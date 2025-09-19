@@ -1,11 +1,14 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const Schema = mongoose.Schema;
 
 const orderData = new Schema({
     weatherType:{type:String},
     temperature:{type:String},
-    orderTime:{type:Date},
+    orderHour:{type:String},
+    orderMonth:{type:String},
+    orderDate:{type:String},
     orderDay:{type:String},
     mealType:{type:String},
     itemId:{type:String},
@@ -15,3 +18,4 @@ const orderData = new Schema({
 const ordersDetail = mongoose.model('ordersDetails',orderData);
 
 export default ordersDetail;
+

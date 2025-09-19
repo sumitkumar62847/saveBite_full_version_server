@@ -30,7 +30,7 @@ export const AdminUserLogin = async (req, res) => {
         // await SendMobileOtp(mobile_no, otp);
         
     }catch(err){
-        console.log(err.message);
+        console.error(err.message);
         return res.status(500).json({ message: err.message });
     }
 }

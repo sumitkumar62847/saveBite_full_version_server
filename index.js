@@ -13,7 +13,7 @@ import getAdminInfo from './Controllers/AdminRoutes/getAdminInfo.js';
 import ItemRoute from './Controllers/AdminRoutes/itemUpload.js';
 import dotenv from 'dotenv';
 import ItemModel from './models/Items.js';
-import Admingetitem from './Controllers/AdminRoutes/getitem.js';
+import Admingetitem, { getEditItem, UpdataItem } from './Controllers/AdminRoutes/getitem.js';
 import deleteItem from './Controllers/AdminRoutes/deleteitem.js';
 import LiveItem from './Controllers/AdminRoutes/Liveitem.js';
 import getRestInfo from './Controllers/AdminRoutes/getRestInfo.js';
@@ -67,9 +67,11 @@ app.get('/admininfo',getAdminInfo);
 app.get('/restinfo',getRestInfo);
 app.get('/restaddressinfo',getRestAddressInfo); 
 app.get('/adminitems', Admingetitem);
-
+app.get('/getedititem', getEditItem);
 
 app.delete('/adminitemdelete',deleteItem);
+
+app.patch('/updataitem',UpdataItem);
 
 app.use('/itemupload',ItemRoute); 
 

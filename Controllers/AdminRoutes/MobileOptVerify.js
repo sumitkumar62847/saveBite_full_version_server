@@ -20,7 +20,7 @@ const MobileOptVerify = async (req,res) => {
             adminUser.stage = 'first';
             }
             adminUser.save();
-            console.log(adminUser.stage)
+            // console.log(adminUser.stage)
             res.status(200).json({token:token,stage:adminUser.stage}); 
         }else if(161616 == motp){
             const token = jwt.sign({ id: adminUser._id }, 'nahipata');

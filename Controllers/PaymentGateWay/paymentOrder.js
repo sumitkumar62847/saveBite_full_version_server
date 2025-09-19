@@ -23,7 +23,6 @@ router.post("/create-order", async (req, res) => {
         if (!user) return res.status(404).json({ message: "User not found" });
 
         const { amount } = req.body;
-        console.log('Amt:', amount)
 
         const options = {
             amount: Math.round(amount * 100),
@@ -32,7 +31,6 @@ router.post("/create-order", async (req, res) => {
         };
 
         const order = await razorpay.orders.create(options);
-        console.log(order)
         res.json({ orderId: order.id, amount: order.amount, currency: order.currency });
         
 
