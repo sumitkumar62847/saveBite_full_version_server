@@ -45,7 +45,7 @@ const app = express();
 const server = http.createServer(app); 
 
 export const io = new Server(server,{
-  cors: {origin: ['http://localhost:3000', 'http://localhost:3001']}
+  cors: {origin:[process.env.FRONTA, process.env.FRONTB]}
 })
 
 io.on('connection', (socket) => {
@@ -56,10 +56,10 @@ const PORT = process.env.SERVER_PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({origin: ['http://localhost:3000', 'http://localhost:3001']})); 
+app.use(cors({origin: [process.env.FRONTA, process.env.FRONTB]})); 
 
 
-mongoose.connect('mongodb+srv://saveBite_db:57ndctGjTFbmgmnN@cluster0.pd7htk2.mongodb.net/',{
+mongoose.connect(process.env.MONGOURL,{
 })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('MongoDB Connection Error:', err));

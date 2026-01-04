@@ -5,6 +5,8 @@ import crypto from 'crypto'
 import UsersAdd from "../../models/UserAddress.js";
 import OrderItem from "../../models/ordersModel.js";
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const currentOrderitems = async (req, res) => {
   try {

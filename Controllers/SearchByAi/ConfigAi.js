@@ -1,7 +1,9 @@
 
 import { GoogleGenAI } from "@google/genai";
+import dotenv from 'dotenv';
+dotenv.config();
 
-const ai = new GoogleGenAI({ apiKey: "AIzaSyDNSJPu9Nwjen5LPhTAVMGlIuenbJCDnIU" });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMMNIAPIKEY });
 
 export const  mainAi = async (searchPrompt) => {
       const prompt = `
