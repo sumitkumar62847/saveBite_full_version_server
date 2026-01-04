@@ -3,6 +3,7 @@ import AdminUser from '../../models/AdminUserModel.js';
 const EmailOptVerify = async (req,res) => {
     try{
         const { emailAddress, eotp } = req.body;
+        console.log( emailAddress, eotp );
         const adminUser = await AdminUser.findOne({ Email: emailAddress });
 
         if(!adminUser){

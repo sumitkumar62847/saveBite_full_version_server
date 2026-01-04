@@ -8,10 +8,11 @@ const router = express.Router();
 
 router.post('/' , upload.array("images", 10) , async (req, res) => {
     try{
-        const { item_name,foodtype,amount,masalaType, price,suitableFor,allergens,ingredients, discount, discription,quantity,userid } = req.body;
+        const { item_name, item_id,foodtype,amount,masalaType, price,suitableFor,allergens,ingredients, discount, discription,quantity,userid } = req.body;
         const imageUrl = req.files.map(file => file.path);
         const newItem = new ItemModel({
             item_name,
+            item_id,
             foodtype,
             amount,
             masalaType,

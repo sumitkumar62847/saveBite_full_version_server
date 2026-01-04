@@ -6,6 +6,7 @@ const itemSchema = new Schema({
     foodtype:{type:String},
     suitableFor:[String],
     item_name:{type:String},
+    item_id:{type:Number},
     price:{type:String},
     discount:{type:String},
     discription:{type:String},

@@ -15,9 +15,6 @@ const userSchema = new Schema({
     profileStatus:{type:Boolean,default:false},
     gender:{type:String},
     cart:{type:Array, default:[]},
-    orders:{type:Array, default:[]},
-    currentDeliveryitems:{type:Array},
-    currentDiningInitems:{type:Array},
 })
 
 const mainUser = mongoose.model('MainSBUserrr', userSchema);

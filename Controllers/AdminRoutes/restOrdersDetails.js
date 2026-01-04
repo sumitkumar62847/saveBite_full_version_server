@@ -32,7 +32,6 @@ export const restItemWithDetail = async (orderItemsObj) => {
     }
 
     const now = new Date();
-    const orderDay = now.getDay(); 
 
     const mealType = () => {
         const hour = now.getHours(); 
@@ -49,7 +48,7 @@ export const restItemWithDetail = async (orderItemsObj) => {
         const newOrderDetail = new ordersDetail({
             weatherType,
             temperature: maintemp,
-            orderDay,
+            orderDay:now.getDay(),
             orderHour:now.getHours(),
             orderDate:now.getDate(),
             orderMonth:now.getMonth(),

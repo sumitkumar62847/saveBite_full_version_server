@@ -34,8 +34,10 @@ import payOrder from './Controllers/PaymentGateWay/paymentOrder.js'
 import payverify from './Controllers/PaymentGateWay/paymentVerify.js';
 import getUserAddress, { removeUserAddress } from './Controllers/MainRoutes/getUserAdd.js';
 import getUserInfo, { createProfile } from './Controllers/MainRoutes/getUserInfo.js';
-import { currentOrderitems, getCurrentOrderitems } from './Controllers/MainRoutes/currentitems.js';
+import { currentOrderitems, getCurrentOrderitems, getOrderitems, getOrderNumber } from './Controllers/MainRoutes/currentitems.js';
 import restAddesses from './Controllers/MainRoutes/restAddresses.js';
+import { mlPrediction } from './Controllers/MainRoutes/Mlprediction.js';
+import OrderItem from './models/ordersModel.js';
 
 
 dotenv.config(); 
@@ -57,7 +59,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({origin: ['http://localhost:3000', 'http://localhost:3001']})); 
 
 
-mongoose.connect('mongodb://localhost:27017/savebitedb',{
+mongoose.connect('mongodb+srv://saveBite_db:57ndctGjTFbmgmnN@cluster0.pd7htk2.mongodb.net/',{
 })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('MongoDB Connection Error:', err));
@@ -69,12 +71,15 @@ app.get('/restaddressinfo',getRestAddressInfo);
 app.get('/adminitems', Admingetitem);
 app.get('/getedititem', getEditItem);
 
+
 app.delete('/adminitemdelete',deleteItem);
 
 app.patch('/updataitem',UpdataItem);
 
 app.use('/itemupload',ItemRoute); 
 
+
+app.post('/prediction', mlPrediction);
 app.post('/AdminLogin', AdminUserLogin);
 app.post('/emailverify', AdminUserEmail);
 app.post('/otpmverify', MobileOptVerify);
@@ -92,6 +97,8 @@ app.get('/getCartItems',getCartItems);
 app.get('/getuseradd', getUserAddress);
 app.get('/userInfo',getUserInfo);
 app.get('/crtitems',getCurrentOrderitems);
+app.get('/ordereditems',getOrderitems);
+app.get('/orderedNbr', getOrderNumber )
 
 app.delete('/CartItemDelete', removeItemByCart);
 app.delete('/deleteAdd',removeUserAddress);
@@ -118,6 +125,9 @@ setInterval( async () => {
     const expiredItems = await ItemModel.find({
       isLiveed:true, LiveUntil: {$lte:now}
     })
+    const orders = await OrderItem.find({
+      orderStatus: { $ne: "Delivered" }
+    });
     if(expiredItems.length > 0){
       const expiredIds = expiredItems.map(item => item._id.toString());
       await ItemModel.updateMany(
@@ -131,6 +141,30 @@ setInterval( async () => {
         }
       );
     }
+
+
+
+    for (const order of orders) {
+      const diffMinutes = Math.floor(
+        (now.getTime() - order.date.getTime()) / 60000
+      );
+
+      let newStatus = order.orderStatus;
+
+      if (diffMinutes >= 20) {
+        newStatus = "Delivered";
+      } else if (diffMinutes >= 10) {
+        newStatus = "On the way";
+      }
+
+      if (newStatus !== order.orderStatus) {
+        await OrderItem.updateOne(
+          { _id: order._id, orderStatus: { $ne: newStatus } },
+          { $set: { orderStatus: newStatus } }
+        );
+      }
+    }
+
   } catch (err) {
       console.error("Error", err.message);
   }
@@ -139,5 +173,6 @@ setInterval( async () => {
 
 
 server.listen(PORT, () => {
+  // console.log(process.uptime());
   console.log(`Server running on port ${PORT}`)
-});
+}); 
