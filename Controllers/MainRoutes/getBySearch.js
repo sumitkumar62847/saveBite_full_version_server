@@ -34,7 +34,7 @@ const getItemsBySearch = async (req, res)=>{
             keys:['item_name'], 
             threshold:0.5,
         }
-        const fuse01 = new Fuse(Items , option01);
+        const fuse01 = new Fuse(items , option01);
 
         const searchItems = fuse01.search(searchdata.suggested).map(e => e.item);
 
@@ -54,7 +54,7 @@ const getItemsBySearch = async (req, res)=>{
                 searchRests.forEach(e=>{ 
                     searchRestId.push(e.userid);
                 })
-                const searchItems = Items.filter(e=> searchRestId.includes(e.userid));
+                const searchItems = items.filter(e=> searchRestId.includes(e.userid));
                 const user = await mainUser.findOne({
                     userid:userid
                     })

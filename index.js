@@ -67,7 +67,7 @@ mongoose.connect(process.env.MONGOURL,{
 // ----Admin-----------------
 app.get('/admininfo',getAdminInfo);
 app.get('/restinfo',getRestInfo);
-app.get('/restaddressinfo',getRestAddressInfo); 
+app.get('/restaddressinfo',getRestAddressInfo);  
 app.get('/adminitems', Admingetitem);
 app.get('/getedititem', getEditItem);
 

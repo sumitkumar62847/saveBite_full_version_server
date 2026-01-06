@@ -43,6 +43,7 @@ mongoose.connection.on('open', () => {
           userid: restaurant.userid,
           isLiveed: true,
         });
+        console.log(items);
         const user = await mainUser.findOne({
           userid:userid
         })
@@ -70,7 +71,7 @@ const getitems = async (req, res) => {
     const latitude = parseFloat(lat);
     
     const FullData = await getitemsNearMe(longitude,latitude, userid);
-
+    console.log(FullData);
     const Datas = FullData?.filter((data)=> data = data != null);
     if (!FullData.length) return res.status(200).json({ message: 'No nearby restaurants', data: [] });
     return res.status(200).json(Datas);
